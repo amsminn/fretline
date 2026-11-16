@@ -19,11 +19,7 @@
 Fretline is a free, open-source macOS app for guitar tablature. Open the tab files you already have, edit them from the keyboard, then drag across any passage and loop it until you can play it. No account, no subscription, no network connection.
 
 <div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/screenshot-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="docs/assets/screenshot-light.png">
-    <img alt="Fretline showing a three-track score with standard notation and tablature" src="docs/assets/screenshot-dark.png">
-  </picture>
+  <img alt="Fretline showing a three-track score with standard notation and tablature" src="docs/assets/screenshot-dark.png">
 </div>
 
 ## Quickstart

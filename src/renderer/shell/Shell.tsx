@@ -1,6 +1,6 @@
 import { Environment } from '@coderline/alphatab';
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, PointerEvent } from 'react';
 import type { Track } from '../../domain/document';
 import type { DesktopBridge } from '../../preload';
 import { BackingTrackPanel } from '../backing/BackingTrackPanel';
@@ -21,6 +21,7 @@ import { ScoreSettings } from '../dialogs/ScoreSettings';
 import { Stylesheet } from '../dialogs/Stylesheet';
 import { DesignOverlay } from '../score/DesignOverlay';
 import type { ScoreHitMap } from '../score/overlay';
+import { selectionStore } from '../editor/selection-state';
 import { ImportReportHost } from '../dialogs/ImportReport';
 import { PrintHost } from '../dialogs/ImageExport';
 import { ArticulationHost } from '../dialogs/NoteAudio';
@@ -127,8 +128,18 @@ function Score({ bridge }: { readonly bridge: DesktopBridge | null }) {
   const shown = multitrack || !current || hiddenTrackIds.has(current.id) ? visible : [current];
   const trackIds = shown.map(track => track.id);
   const openTuning = (index: number): void => { workspace.setActiveTrack(index); registry.execute(symbolCommands.tuning); };
+  // A press beside or below the page releases the selection, as a press on the page that hits no beat does.
+  // The scroll bars sit outside the client box and keep it.
+  const releaseSelection = (event: PointerEvent<HTMLDivElement>): void => {
+    const area = event.currentTarget;
+    if (event.button !== 0 || !(event.target instanceof Element) || !area.contains(event.target)) return;
+    if (surface.current?.contains(event.target) || event.target.closest('button')) return;
+    const bounds = area.getBoundingClientRect();
+    if (event.clientX - bounds.left >= area.clientLeft + area.clientWidth || event.clientY - bounds.top >= area.clientTop + area.clientHeight) return;
+    selectionStore.clear();
+  };
   return (
-    <div className="score-scroll min-h-0 flex-1 overflow-auto p-4" data-testid="score-scroll" data-multitrack={multitrack} data-design={design} data-shown-tracks={trackIds.join(',')}>
+    <div className="score-scroll min-h-0 flex-1 overflow-auto p-4" data-testid="score-scroll" onPointerDown={releaseSelection} data-multitrack={multitrack} data-design={design} data-shown-tracks={trackIds.join(',')}>
       {shown.length > 1 ? <TuningHeader tracks={shown.map(track => ({ track, index: score.tracks.indexOf(track) }))} onOpen={openTuning} /> : null}
       <div ref={surface} className="relative">
         <EditorScoreView document={score} trackIds={trackIds} zoom={runtime.scale(active)} onRendered={setMap} />
