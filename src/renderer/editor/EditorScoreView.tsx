@@ -59,6 +59,7 @@ export function EditorScoreView({ store = selectionStore, overlay, onRendered, .
           target.set(rangeSelection(document, gesture.anchor, gesture.focus));
           target.setDragging(gesture.phase === 'drag');
           break;
+        case 'clear': target.clear(); break;
         case 'cancelled':
           if (target.getSnapshot().dragging) target.set(beforeDrag.current);
           target.setDragging(false);

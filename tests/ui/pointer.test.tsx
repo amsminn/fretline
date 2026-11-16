@@ -91,14 +91,13 @@ describe('PointerController', () => {
     expect(rangeLabels(last(gestures))).toEqual(['m4b3', 'm5b2', 'end']);
     expect(nearestHit(map, { x: m4b3.bounds.x - 3, y: m4b3.bounds.y - 100 })?.eventId).toBe(m4b3.eventId);
   });
-  it('turns a click in empty space into a caret on the nearest beat', () => {
+  it('clears the selection on a click in empty space', () => {
     const { instance, gestures } = controller(() => map);
     const m4b3 = beatHit(map, 'm4b3');
     const empty = { x: m4b3.bounds.x - 3, y: m4b3.bounds.y - 100 };
     instance.down({ ...empty, clicks: 1 });
     instance.up(empty);
-    const gesture = last(gestures);
-    expect(gesture.kind === 'caret' && gesture.hit.eventId).toBe(m4b3.eventId);
+    expect(last(gestures).kind).toBe('clear');
   });
   it('rejects a release whose render generation went stale during the gesture', () => {
     let current = map;

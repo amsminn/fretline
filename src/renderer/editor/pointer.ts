@@ -8,6 +8,7 @@ export type Gesture =
   | { readonly kind: 'caret'; readonly hit: ScoreHit }
   | { readonly kind: 'track'; readonly hit: ScoreHit }
   | { readonly kind: 'range'; readonly anchor: ScoreHit; readonly focus: ScoreHit; readonly phase: 'drag' | 'end' }
+  | { readonly kind: 'clear' }
   | { readonly kind: 'cancelled' }
   | { readonly kind: 'rejected' };
 export type Scroller = {
@@ -64,9 +65,8 @@ export class PointerController {
     const edges = press.handle ? this.options.rangeEdges?.() : undefined;
     const anchor = press.handle && edges ? (press.handle === 'start' ? edges.end : edges.start) : undefined;
     const voiceId = this.options.voiceId?.();
-    // A press between beats belongs to the nearest one, so a click in empty space moves the caret there and releases a range.
     const hit = anchor ? (press.handle === 'start' ? edges?.start : edges?.end) :
-      editHitTest(map, { ...press, ...(voiceId ? { voiceId } : {}) }, map.generation) ?? nearestHit(map, press);
+      editHitTest(map, { ...press, ...(voiceId ? { voiceId } : {}) }, map.generation);
     this.pending = { origin: press, hit, anchor, clicks: press.clicks };
     this.drag = undefined;
     this.autoscroll = undefined;
@@ -118,6 +118,8 @@ export class PointerController {
       this.options.onGesture({ kind: 'range', anchor: drag.anchor, focus, phase: 'end' });
       return;
     }
+    // A click that lands on no beat clears the selection.
+    if (pending && !pending.hit) { this.options.onGesture({ kind: 'clear' }); return; }
     if (!pending?.hit) return;
     if (stale(pending.hit.generation)) { this.options.onGesture({ kind: 'rejected' }); return; }
     this.options.onGesture(pending.clicks >= 3 ? { kind: 'track', hit: pending.hit } : { kind: 'caret', hit: pending.hit });

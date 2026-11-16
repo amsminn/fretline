@@ -74,6 +74,7 @@ async function setup() {
           selectionStore.set(rangeSelection(project.score, gesture.anchor, gesture.focus));
           selectionStore.setDragging(gesture.phase === 'drag'); break;
         case 'caret': selectionStore.set(caretSelection(project.score, gesture.hit)); break;
+        case 'clear': selectionStore.clear(); break;
         case 'track': case 'cancelled': case 'rejected': break;
         default: { const exhaustive: never = gesture; return exhaustive; }
       }

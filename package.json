@@ -1,7 +1,7 @@
 {
   "name": "fretline",
   "productName": "Fretline",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "private": true,
   "description": "Offline score editor and practice desktop application",

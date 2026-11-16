@@ -33,8 +33,8 @@ export const run: QaCase = context => withImportApp(context, resolve('tests/fixt
   const box = await page.getByTestId('editor-surface').boundingBox();
   if (!box) throw new TypeError('The score surface has no bounds');
   await page.mouse.click(box.x + box.width / 2, box.y + box.height - 6);
-  await expect(page.locator('[data-overlay-kind="selection"]')).toHaveCount(2);
-  context.assert(true, 'A click in the empty space below the last system leaves a one-beat caret (standard and TAB) instead of the six-beat range');
+  await expect(page.locator('[data-overlay-kind="selection"]')).toHaveCount(0);
+  context.assert(true, 'A click in the empty space below the last system clears the selection');
   await input.key('Space');
   await expect(transport).toHaveAttribute('data-status', 'playing');
   context.assert(await total(page) === 16, `After releasing the range the whole score plays again (${await total(page)} s)`);
