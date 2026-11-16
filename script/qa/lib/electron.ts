@@ -8,6 +8,13 @@ export type ElectronSurface = { readonly application: ElectronApplication; reado
 type OwnedElectron = { readonly application: ElectronApplication; readonly close: () => Promise<void> };
 const launches = new Set<Promise<OwnedElectron>>();
 
+/**
+ * QA cases read Korean labels, and the app follows the language macOS lists first. Each launch
+ * therefore states that list itself (the macOS argument domain), whatever the host prefers.
+ */
+export const systemLanguages = (...languages: readonly string[]): readonly string[] => ['-AppleLanguages', `(${languages.join(',')})`];
+export const koreanSystem = systemLanguages('ko');
+
 export async function closeElectronApplications(): Promise<void> {
   await Promise.all([...launches].map(async pending => { await (await pending).close(); }));
 }
@@ -18,7 +25,7 @@ export async function withElectron(context: QaContext, action: (surface: Electro
     .map(signal => ({ signal, existing: new Set(process.listeners(signal)) }));
   let expectedClose = false;
   const pending = _electron.launch({
-    ...(context.app ? { executablePath: resolve(context.app, 'Contents/MacOS/Fretline'), args: [] } : { args: [resolve('out/main/index.js')] }),
+    ...(context.app ? { executablePath: resolve(context.app, 'Contents/MacOS/Fretline'), args: [...koreanSystem] } : { args: [resolve('out/main/index.js'), ...koreanSystem] }),
     // Hidden window by default; run with FRETLINE_QA_HEADLESS=0 to watch a case.
     env: { ...environment, FRETLINE_QA: '1', FRETLINE_QA_HEADLESS: environment['FRETLINE_QA_HEADLESS'] ?? '1', FRETLINE_QA_PARENT_PID: String(process.pid), FRETLINE_QA_EVIDENCE: context.evidence },
     timeout: 30_000,

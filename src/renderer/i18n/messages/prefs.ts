@@ -10,6 +10,7 @@ export const prefsMessages = {
   'prefs.theme.dark': ['어두움', 'Dark'],
   'prefs.theme.light': ['밝음', 'Light'],
   'prefs.language': ['언어', 'Language'],
+  'prefs.language.system': ['시스템 언어 따름', 'Match system'],
   'prefs.language.ko': ['한국어', 'Korean'],
   'prefs.language.en': ['English', 'English'],
   'prefs.restoreWindow': ['마지막 창 크기와 위치 복원', 'Restore last window size and position'],

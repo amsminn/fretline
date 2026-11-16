@@ -6,7 +6,7 @@ import { dirname, extname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { applicationUrl, assetBody, contentSecurityPolicy, documentNonce, isApplicationUrl, nonceBody, resolveAssetPath } from './protocol';
 import { installApplicationMenu } from './menu';
-import { applicationSettings, registerIpcHandlers } from './ipc';
+import { applicationLanguage, applicationSettings, registerIpcHandlers } from './ipc';
 import { setLanguage } from '../renderer/i18n/language';
 import type { WindowBounds } from './settings';
 import { coordinateClose } from './window-close';
@@ -135,7 +135,7 @@ void app.whenReady().then(() => {
   });
   session.defaultSession.setPermissionRequestHandler((_webContents, _permission, callback) => callback(false));
   session.defaultSession.setPermissionCheckHandler(() => false);
-  setLanguage(applicationSettings().get().language);
+  setLanguage(applicationLanguage());
   installApplicationMenu();
   registerIpcHandlers();
   createWindow();

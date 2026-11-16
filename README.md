@@ -44,7 +44,7 @@ The installer downloads the latest release, verifies its SHA-256 checksum and co
 - **Export anywhere** — PDF, PNG, SVG, WAV (also one file per track), MusicXML, MIDI, alphaTex and `.gp`.
 - **Your work is safe** — Originals are never overwritten, and after a crash Fretline restores what you were working on.
 - **Fully offline** — Sounds, fonts and help are bundled. Nothing is sent anywhere.
-- **Korean and English** — With dark and light themes.
+- **English and Korean** — Follows your macOS language, or the one you pick. Dark and light themes.
 
 ## File formats
 

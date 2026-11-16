@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
-import { defaultSettings as defaultRendererSettings } from '../../src/main/settings';
+import { defaultSettings, rendererSettings } from '../../src/main/settings';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { readFile } from 'node:fs/promises';
 import type { DesktopBridge, MenuAvailabilityEntry } from '../../src/preload';
@@ -48,7 +48,7 @@ async function setup() {
     recentFiles: unavailable, openSelectedFile: unavailable, releaseDocument: unavailable,
     recentForget: unavailable, recentPin: unavailable, closeWindow: unavailable, cancelClose: unavailable, receiveClose: unavailable, onCloseRequested: () => () => {},
     setPlaybackActive: async () => {},
-    preferences: { get: async () => defaultRendererSettings, set: unavailable },
+    preferences: { get: async () => rendererSettings(defaultSettings, ['ko-KR']), set: unavailable },
     saveProject: unavailable, saveProjectAs: unavailable, readAsset: unavailable,
     listRecovery: async () => [],
     writeRecovery: async (_token, revision, parts) => ({ kind: 'written', projectId: parts.project.projectId, revision,

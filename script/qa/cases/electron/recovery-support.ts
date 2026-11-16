@@ -8,11 +8,12 @@ import { parseManifest } from '../../../../src/domain/project';
 import { parseScoreDocument } from '../../../../src/domain/validate';
 import type { QaContext } from '../../lib/contracts';
 import type { ImportSurface } from './import-support';
+import { koreanSystem } from '../../lib/electron';
 
 export async function withRecoveryApp(context: QaContext, launch: { readonly userData: string; readonly file?: string },
   action: (surface: ImportSurface) => Promise<'crash' | 'close'>): Promise<void> {
   const environment = Object.fromEntries(Object.entries(process.env).filter((pair): pair is [string, string] => pair[1] !== undefined));
-  const application = await _electron.launch({ args: [resolve('out/main/index.js'), ...(launch.file ? [launch.file] : [])],
+  const application = await _electron.launch({ args: [resolve('out/main/index.js'), ...(launch.file ? [launch.file] : []), ...koreanSystem],
     env: { ...environment, FRETLINE_QA: '1', FRETLINE_QA_HEADLESS: '1', FRETLINE_QA_PARENT_PID: String(process.pid),
       FRETLINE_QA_EVIDENCE: context.evidence, FRETLINE_USER_DATA: launch.userData }, timeout: 30_000 });
   const child = application.process();

@@ -2,8 +2,9 @@ import type { Language } from '../../main/settings';
 
 /**
  * The one UI-language cell shared by the renderer and, through its own module instance, the main
- * process. Korean is the default; the preferences store (renderer) and the settings store (main)
- * write the persisted choice here, and every surface reads through `t()` or `useLanguage()`.
+ * process. It holds Korean until the settings arrive: main writes the language it resolved from the
+ * settings before it builds the menu, the renderer before its first commit, and every surface reads
+ * through `t()` or `useLanguage()`.
  */
 let current: Language = 'ko';
 const listeners = new Set<() => void>();

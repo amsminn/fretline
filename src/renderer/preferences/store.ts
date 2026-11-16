@@ -3,7 +3,7 @@ import type { PreferencesBridge } from '../../preload';
 import type { CommandRegistry } from '../commands/registry';
 import type { PanelId, WorkspaceStore } from '../shell/workspace';
 import type { DocumentStore } from '../state/documents';
-import { setLanguage } from '../i18n/language';
+import { getLanguage, setLanguage } from '../i18n/language';
 import { shutdownFor } from '../state/shutdown';
 
 export type PreferencesSnapshot = {
@@ -18,7 +18,7 @@ const panelIds: readonly PanelId[] = ['palette', 'inspector', 'globalView'];
  * back, debounced. Only theme, language, panel layout and the restore flag flow through here.
  */
 export class PreferencesStore {
-  private snapshot: PreferencesSnapshot = { settings: null, open: false, language: 'ko' };
+  private snapshot: PreferencesSnapshot = { settings: null, open: false, language: getLanguage() };
   private readonly listeners = new Set<() => void>();
   private timer: ReturnType<typeof setTimeout> | undefined;
   private applying = false;
@@ -43,9 +43,9 @@ export class PreferencesStore {
         if (current.size !== settings.panels[id].size) this.workspace.resizePanel(id, settings.panels[id].size);
       }
     } finally { this.applying = false; }
-    document.documentElement.lang = settings.language;
-    setLanguage(settings.language);
-    this.publish({ settings, language: settings.language });
+    document.documentElement.lang = settings.displayLanguage;
+    setLanguage(settings.displayLanguage);
+    this.publish({ settings, language: settings.displayLanguage });
   }
   private report(error: unknown): void {
     if (!(error instanceof Error)) throw error;

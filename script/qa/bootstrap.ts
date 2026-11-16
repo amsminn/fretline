@@ -10,6 +10,7 @@ import type { DesktopBridge } from '../../src/preload/index';
 import { artifactManifest, fixtureHashes } from './artifacts';
 import type { CleanupReceipt } from './lib/contracts';
 import { qaPlanHash } from './lib/plan';
+import { koreanSystem } from './lib/electron';
 
 // allow: SIZE_OK — one end-to-end bootstrap audit owns the complete sandbox, bridge, asset and teardown receipt.
 const { values } = parseArgs({
@@ -50,7 +51,7 @@ environment['FRETLINE_QA_HEADLESS'] = '1';
 
 try {
   application = await _electron.launch({
-    args: [resolve('out/main/index.js')],
+    args: [resolve('out/main/index.js'), ...koreanSystem],
     env: environment,
     timeout: 30_000,
   });

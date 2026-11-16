@@ -10,26 +10,28 @@ import type { Schema } from '../domain/schema/check';
  */
 export type Theme = 'dark' | 'light';
 export type Language = 'ko' | 'en';
+/** What the user chose: one language, or the language macOS lists first. */
+export type LanguageSetting = 'system' | Language;
 export type PanelSetting = { readonly visible: boolean; readonly size: number };
 export type PanelSettings = { readonly palette: PanelSetting; readonly inspector: PanelSetting; readonly globalView: PanelSetting };
 export type WindowBounds = { readonly width: number; readonly height: number; readonly x?: number; readonly y?: number };
 export type RecentEntry = { readonly path: string; readonly pinned: boolean; readonly openedAt: string };
 export type Settings = {
-  readonly version: 1;
+  readonly version: 2;
   readonly theme: Theme;
-  readonly language: Language;
+  readonly language: LanguageSetting;
   readonly panels: PanelSettings;
   readonly window: WindowBounds | null;
   readonly restoreWindow: boolean;
   readonly recent: readonly RecentEntry[];
 };
 export type SettingsPatch = Partial<Pick<Settings, 'theme' | 'language' | 'panels' | 'restoreWindow'>>;
-export type RendererSettings = Pick<Settings, 'version' | 'theme' | 'language' | 'panels' | 'restoreWindow'>;
+export type RendererSettings = Pick<Settings, 'version' | 'theme' | 'language' | 'panels' | 'restoreWindow'> & { readonly displayLanguage: Language };
 
 export const recentLimit = 20;
 const panelLimits = { palette: [160, 420, 220], inspector: [200, 480, 260], globalView: [96, 420, 190] } as const;
 export const defaultSettings: Settings = {
-  version: 1, theme: 'dark', language: 'ko',
+  version: 2, theme: 'dark', language: 'system',
   panels: { palette: { visible: true, size: 220 }, inspector: { visible: true, size: 260 }, globalView: { visible: true, size: 190 } },
   window: null, restoreWindow: true, recent: [],
 };
@@ -49,9 +51,9 @@ export const settingsSchema: Schema = {
   type: 'object', additionalProperties: false,
   required: ['version', 'theme', 'language', 'panels', 'window', 'restoreWindow', 'recent'],
   properties: {
-    version: { const: 1 },
+    version: { const: 2 },
     theme: { enum: ['dark', 'light'] },
-    language: { enum: ['ko', 'en'] },
+    language: { enum: ['system', 'ko', 'en'] },
     panels: { type: 'object', required: ['palette', 'inspector', 'globalView'], additionalProperties: false,
       properties: { palette: panelSchema('palette'), inspector: panelSchema('inspector'), globalView: panelSchema('globalView') } },
     window: windowSchema,
@@ -99,17 +101,20 @@ function pickRecent(input: unknown): readonly RecentEntry[] {
   return entries.slice(0, recentLimit);
 }
 /**
- * Any stored shape (a version-0 file, a damaged file, a future version) migrates to a valid version-1
+ * Any stored shape (an older file, a damaged file, a future version) migrates to a valid version-2
  * document by keeping each recognised safe value and defaulting the rest. It never throws.
+ * Version 1 wrote Korean into every file as its default, so there a stored Korean was not a choice
+ * and becomes the system language; a stored English was chosen and is kept.
  */
 export function migrateSettings(input: unknown): Settings {
   if (isSettings(input)) return input;
   const raw = record(input);
   const panels = record(raw['panels']);
   const migrated: Settings = {
-    version: 1,
+    version: 2,
     theme: pickEnum(raw['theme'], ['dark', 'light'], defaultSettings.theme),
-    language: pickEnum(raw['language'], ['ko', 'en'], defaultSettings.language),
+    language: raw['version'] === 2 ? pickEnum(raw['language'], ['system', 'ko', 'en'], defaultSettings.language)
+      : raw['language'] === 'en' ? 'en' : defaultSettings.language,
     panels: { palette: pickPanel(panels['palette'], 'palette'), inspector: pickPanel(panels['inspector'], 'inspector'), globalView: pickPanel(panels['globalView'], 'globalView') },
     window: pickWindow(raw['window']),
     restoreWindow: typeof raw['restoreWindow'] === 'boolean' ? raw['restoreWindow'] : defaultSettings.restoreWindow,
@@ -127,8 +132,11 @@ export function applyPatch(current: Settings, patch: unknown): Settings {
   if (allowed.some(key => key in value && JSON.stringify(next[key]) !== JSON.stringify(value[key]))) throw new TypeError('Settings patch contains invalid values');
   return next;
 }
-export const rendererSettings = ({ version, theme, language, panels, restoreWindow }: Settings): RendererSettings =>
-  ({ version, theme, language, panels, restoreWindow });
+/** English unless the chosen language, or the first language macOS lists, is Korean. */
+export const displayLanguage = (setting: LanguageSetting, systemLanguages: readonly string[]): Language =>
+  setting !== 'system' ? setting : systemLanguages[0]?.toLowerCase().startsWith('ko') ? 'ko' : 'en';
+export const rendererSettings = ({ version, theme, language, panels, restoreWindow }: Settings, systemLanguages: readonly string[]): RendererSettings =>
+  ({ version, theme, language, panels, restoreWindow, displayLanguage: displayLanguage(language, systemLanguages) });
 
 export function rememberRecent(current: Settings, path: string, now = new Date()): Settings {
   const existing = current.recent.find(entry => entry.path === path);

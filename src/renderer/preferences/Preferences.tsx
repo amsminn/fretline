@@ -1,5 +1,5 @@
 import { useEffect, useSyncExternalStore } from 'react';
-import type { Language, Theme } from '../../main/settings';
+import type { LanguageSetting, Theme } from '../../main/settings';
 import type { DesktopBridge } from '../../preload';
 import { useServices } from '../shell/services';
 import type { ShellServices } from '../shell/services';
@@ -26,7 +26,7 @@ export function preferencesStore(services: ShellServices, bridge: DesktopBridge 
 }
 
 const isTheme = (value: string): value is Theme => value === 'dark' || value === 'light';
-const isLanguage = (value: string): value is Language => value === 'ko' || value === 'en';
+const isLanguage = (value: string): value is LanguageSetting => value === 'system' || value === 'ko' || value === 'en';
 const panelIds: readonly PanelId[] = ['palette', 'inspector', 'globalView'];
 
 export function Preferences({ bridge }: { readonly bridge: DesktopBridge }) {
@@ -62,6 +62,7 @@ export function Preferences({ bridge }: { readonly bridge: DesktopBridge }) {
               <Select value={settings.language} onValueChange={value => { if (isLanguage(value)) void store.set({ language: value }); }}>
                 <SelectTrigger aria-label={t('prefs.language')} data-testid="language-select" className="w-40"><SelectValue /></SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="system">{t('prefs.language.system')}</SelectItem>
                   <SelectItem value="ko">{t('prefs.language.ko')}</SelectItem>
                   <SelectItem value="en">{t('prefs.language.en')}</SelectItem>
                 </SelectContent>

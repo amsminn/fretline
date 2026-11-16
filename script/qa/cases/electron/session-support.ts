@@ -2,15 +2,17 @@ import { _electron, expect } from '@playwright/test';
 import type { ElectronApplication, Page } from '@playwright/test';
 import { resolve } from 'node:path';
 import type { QaContext } from '../../lib/contracts';
+import { koreanSystem } from '../../lib/electron';
 
 export type SessionSurface = { readonly application: ElectronApplication; readonly page: Page };
 export type QuitReceipt = { readonly quitMs: number; readonly exitCode: number | null; readonly signal: string | null };
 
 /** Pinned userData so settings, recent files and recovery survive the restart the scenarios exercise. */
-export async function withSessionApp(context: QaContext, userData: string, action: (surface: SessionSurface) => Promise<void>): Promise<QuitReceipt> {
+export async function withSessionApp(context: QaContext, userData: string, action: (surface: SessionSurface) => Promise<void>,
+  system: readonly string[] = koreanSystem): Promise<QuitReceipt> {
   const environment = Object.fromEntries(Object.entries(process.env).filter((pair): pair is [string, string] => pair[1] !== undefined));
   const application = await _electron.launch({
-    ...(context.app ? { executablePath: resolve(context.app, 'Contents/MacOS/Fretline'), args: [] } : { args: [resolve('out/main/index.js')] }),
+    ...(context.app ? { executablePath: resolve(context.app, 'Contents/MacOS/Fretline'), args: [...system] } : { args: [resolve('out/main/index.js'), ...system] }),
     env: { ...environment, FRETLINE_QA: '1', FRETLINE_QA_HEADLESS: '1', FRETLINE_QA_PARENT_PID: String(process.pid),
       FRETLINE_QA_EVIDENCE: context.evidence, FRETLINE_USER_DATA: userData }, timeout: 30_000 });
   const child = application.process();

@@ -50,7 +50,7 @@ export const run: QaCase = async context => {
   context.assert(first.quitMs >= 0 && first.quitMs < 2_500 && first.exitCode === 0,
     `Cmd+Q-style app.quit() completes through the renderer acknowledgement (${first.quitMs.toFixed(0)} ms, exit ${first.exitCode}) rather than the 3 s fallback`);
   const settings = JSON.parse(await readFile(resolve(userData, 'settings.json'), 'utf8'));
-  context.assert(settings.version === 1 && settings.theme === 'light' && settings.recent.some((entry: { path: string; pinned: boolean }) => entry.path === saved && entry.pinned),
+  context.assert(settings.version === 2 && settings.theme === 'light' && settings.recent.some((entry: { path: string; pinned: boolean }) => entry.path === saved && entry.pinned),
     'settings.json persists theme and the pinned recent entry; no loop or selection state is stored');
   context.assert(!('loop' in settings) && !('selection' in settings), 'Persisted settings contain only restart-safe keys');
   const archive = await inspectArchive(saved);

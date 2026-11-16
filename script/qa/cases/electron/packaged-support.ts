@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 import { _electron, expect } from '@playwright/test';
 import type { QaContext } from '../../lib/contracts';
 import type { ImportSurface } from './import-support';
+import { koreanSystem } from '../../lib/electron';
 
 /** Keep the app cwd outside the checkout while the runner retains its own fixture paths. */
 export async function withPackage(context: QaContext, fixture: string,
@@ -15,7 +16,7 @@ export async function withPackage(context: QaContext, fixture: string,
     await copyFile(fixture, input);
     const environment = Object.fromEntries(Object.entries(process.env).filter((pair): pair is [string, string] => pair[1] !== undefined));
     const application = await _electron.launch({
-      executablePath: resolve(app, 'Contents/MacOS/Fretline'), args: [input], cwd: outside,
+      executablePath: resolve(app, 'Contents/MacOS/Fretline'), args: [input, ...koreanSystem], cwd: outside,
       env: { ...environment, FRETLINE_QA: '1', FRETLINE_QA_HEADLESS: '1',
         FRETLINE_USER_DATA: resolve(outside, 'userData'),
         FRETLINE_QA_PARENT_PID: String(process.pid), FRETLINE_QA_EVIDENCE: context.evidence },

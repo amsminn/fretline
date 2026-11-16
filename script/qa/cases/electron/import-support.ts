@@ -4,13 +4,15 @@ import { resolve } from 'node:path';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import type { QaContext } from '../../lib/contracts';
+import { koreanSystem } from '../../lib/electron';
 
 export type ImportSurface = { readonly application: ElectronApplication; readonly page: Page };
-export async function withImportApp(context: QaContext, argv: string | null, action: (surface: ImportSurface) => Promise<void>): Promise<void> {
+export async function withImportApp(context: QaContext, argv: string | null, action: (surface: ImportSurface) => Promise<void>,
+  system: readonly string[] = koreanSystem): Promise<void> {
   const environment = Object.fromEntries(Object.entries(process.env).filter((pair): pair is [string, string] => pair[1] !== undefined));
   const application = await _electron.launch({
-    ...(context.app ? { executablePath: resolve(context.app, 'Contents/MacOS/Fretline'), args: argv ? [argv] : [] }
-      : { args: [resolve('out/main/index.js'), ...(argv ? [argv] : [])] }),
+    ...(context.app ? { executablePath: resolve(context.app, 'Contents/MacOS/Fretline'), args: [...(argv ? [argv] : []), ...system] }
+      : { args: [resolve('out/main/index.js'), ...(argv ? [argv] : []), ...system] }),
     env: { ...environment, FRETLINE_QA: '1', FRETLINE_QA_HEADLESS: environment['FRETLINE_QA_HEADLESS'] ?? '1', FRETLINE_QA_PARENT_PID: String(process.pid),
       FRETLINE_QA_EVIDENCE: context.evidence }, timeout: 30_000,
   });

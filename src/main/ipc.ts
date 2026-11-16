@@ -11,7 +11,8 @@ import { observedFile } from './external-change';
 import { serializeDestination } from './atomic-save';
 import { registerRecoveryFlow } from './recovery-flow';
 import { bindRecentSettings, chooseFile, forgetRecentFile, openFile, pinRecentFile, selectedFile, takeOpenFiles, recentFiles, rememberFile } from './open';
-import { rendererSettings, SettingsStore, settingsFile } from './settings';
+import { displayLanguage, rendererSettings, SettingsStore, settingsFile } from './settings';
+import type { Language } from './settings';
 import { acknowledgeClose, cancelClose, receiveClose } from './window-close';
 import type { OpenDocumentResult } from './open';
 import { RecoveryStore } from './recovery';
@@ -43,6 +44,7 @@ const sourcePaths = new Map<number, Set<string>>();
 let exportStreams: ExportStreams | undefined;
 let audioRenderer: AudioExportRenderer | undefined;
 let settings: SettingsStore | undefined;
+export const applicationLanguage = (): Language => displayLanguage(applicationSettings().get().language, app.getPreferredSystemLanguages());
 export function applicationSettings(): SettingsStore {
   settings ??= new SettingsStore(settingsFile(app.getPath('userData')));
   return settings;
@@ -190,12 +192,12 @@ export function registerIpcHandlers(): void {
   handle('recent-files', 0, () => recentFiles());
   handle('recent-forget', 1, (_event, args) => { forgetRecentFile(args[0]); return recentFiles(); });
   handle('recent-pin', 2, (_event, args) => { pinRecentFile(args[0], args[1]); return recentFiles(); });
-  handle('preferences-get', 0, () => rendererSettings(applicationSettings().get()));
+  handle('preferences-get', 0, () => rendererSettings(applicationSettings().get(), app.getPreferredSystemLanguages()));
   handle('preferences-set', 1, (_event, args) => {
     const next = applicationSettings().patch(args[0]);
-    setLanguage(next.language);
+    setLanguage(applicationLanguage());
     refreshApplicationMenu();
-    return rendererSettings(next);
+    return rendererSettings(next, app.getPreferredSystemLanguages());
   });
   handle('playback-active', 1, (event, args) => {
     if (typeof args[0] !== 'boolean') throw new StorageError('SCHEMA', 'Playback state must be boolean');

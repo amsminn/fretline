@@ -69,7 +69,8 @@ describe('shell under the English language setting', () => {
     const overflow = await screen.findByRole('menu');
     expect(overflow.querySelectorAll('[role="menuitem"]').length).toBeGreaterThan(5);
     expect(hangulFindings()).toEqual([]);
-  });
+  // The sweep opens every dialog; on a loaded host it needs more than the 5 s default.
+  }, 60_000);
   it('switches the same mounted shell back to Korean', async () => {
     setLanguage('en');
     const context = services();

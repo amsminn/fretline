@@ -2,6 +2,7 @@ import { setNonce } from 'get-nonce';
 import { createRoot } from 'react-dom/client';
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { App } from './App';
+import { setLanguage } from './i18n/language';
 import './styles/index.css';
 
 // Radix portals inject <style> elements at runtime; the per-response nonce from main lets the strict
@@ -12,6 +13,10 @@ if (nonce) setNonce(nonce);
 const root = document.getElementById('root');
 if (!root) throw new TypeError('Missing renderer root');
 await window.desktop.bootstrapStatus();
+// The language is known before the first commit, so the shell never paints in another language first.
+const { displayLanguage } = await window.desktop.preferences.get();
+document.documentElement.lang = displayLanguage;
+setLanguage(displayLanguage);
 for (const path of ['/font/Bravura.woff2', '/soundfont/sonivox.sf2']) {
   const response = await fetch(new URL(path, location.href), { method: 'HEAD' });
   if (!response.ok) throw new TypeError(`Local asset unavailable: ${path} (${response.status})`);

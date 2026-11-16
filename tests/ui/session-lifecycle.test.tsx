@@ -9,7 +9,7 @@ import { rationalQ } from '../../src/domain/rational';
 import type { Selection } from '../../src/domain/selection';
 import type { OpenDocumentResult, RecentFile } from '../../src/main/open';
 import { projectHash } from '../../src/main/projects';
-import { applyPatch, defaultSettings, migrateSettings, rememberRecent, SettingsStore } from '../../src/main/settings';
+import { applyPatch, defaultSettings, displayLanguage, migrateSettings, rememberRecent, rendererSettings, SettingsStore } from '../../src/main/settings';
 import { registerFileCommands } from '../../src/renderer/commands/file';
 import type { CloseChoice } from '../../src/renderer/commands/file';
 import { CommandRegistry } from '../../src/renderer/commands/registry';
@@ -167,6 +167,16 @@ describe('session lifecycle', () => {
     expect(selection.getSnapshot().selection).toBeNull();
   });
 
+  it('shows English unless the chosen language or the first system language is Korean', () => {
+    expect([['ko-KR', 'en-US'], ['ko'], ['en-KR', 'ko-KR'], ['ja-JP'], []].map(system => displayLanguage('system', system))).toEqual(['ko', 'ko', 'en', 'en', 'en']);
+    expect([displayLanguage('ko', ['en-US']), displayLanguage('en', ['ko-KR'])]).toEqual(['ko', 'en']);
+    expect(rendererSettings(defaultSettings, ['ko-KR'])).toMatchObject({ language: 'system', displayLanguage: 'ko' });
+  });
+  it('follows the system after an upgrade unless English had been chosen, and keeps a later choice of Korean', () => {
+    expect([{ version: 1, language: 'ko' }, { version: 1, language: 'en' }, { language: 'ko' }, { version: 2, language: 'ko' }, { version: 2, language: 'system' }]
+      .map(stored => migrateSettings(stored).language)).toEqual(['system', 'en', 'system', 'ko', 'system']);
+    expect(applyPatch(migrateSettings({ version: 1, language: 'ko' }), { language: 'ko' }).language).toBe('ko');
+  });
   it('migrates version-0 and damaged settings to safe values and persists only allowed patches', async () => {
     expect(migrateSettings(undefined)).toEqual(defaultSettings);
     expect(migrateSettings({ theme: 'light', language: 'fr', recent: ['/a/one.fretline', '/a/one.fretline', 7], window: { width: 100, height: 'tall' },
@@ -372,7 +382,8 @@ describe('review findings', () => {
       const context = services();
       let stored = { ...defaultSettings };
       const writes: unknown[] = [];
-      const bridge = { get: async () => stored, set: async (patch: Parameters<typeof applyPatch>[1]) => { writes.push(patch); stored = applyPatch(stored, patch); return stored; } };
+      const bridge = { get: async () => rendererSettings(stored, ['ko-KR']),
+        set: async (patch: Parameters<typeof applyPatch>[1]) => { writes.push(patch); stored = applyPatch(stored, patch); return rendererSettings(stored, ['ko-KR']); } };
       const store = new PreferencesStore(context.workspace, context.documents, bridge);
       const registry = new CommandRegistry();
       disposers.push(store.bind(registry));
