@@ -1,0 +1,8 @@
+{
+  "accepted": false,
+  "reason": "duplicate-normalized-name",
+  "entries": [
+    "score.json",
+    "./score.json"
+  ]
+}

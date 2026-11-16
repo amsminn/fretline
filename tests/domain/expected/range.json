@@ -1,0 +1,7 @@
+{
+  "direction": "reverse",
+  "range": { "startQ": { "n": "5", "d": "1" }, "endQ": { "n": "11", "d": "1" } },
+  "measureOrder": [2, 3],
+  "playbackStartQ": [{ "n": "0", "d": "1" }, { "n": "3", "d": "1" }],
+  "spanQ": [{ "n": "3", "d": "1" }, { "n": "3", "d": "1" }]
+}

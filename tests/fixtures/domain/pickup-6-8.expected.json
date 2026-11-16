@@ -1,0 +1,25 @@
+{
+  "basis": "Self-authored musical contract; exact rational arithmetic, no importer output",
+  "meter": [
+    6,
+    8
+  ],
+  "spanQ": [
+    {
+      "n": "1",
+      "d": "1"
+    },
+    {
+      "n": "3",
+      "d": "1"
+    }
+  ],
+  "eventsPerBar": [
+    2,
+    6
+  ],
+  "eventDurationQ": {
+    "n": "1",
+    "d": "2"
+  }
+}

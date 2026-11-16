@@ -1,0 +1,7 @@
+{
+  "basis": "Self-authored musical contract; exact rational arithmetic, no importer output",
+  "trackCount": 16,
+  "measureCount": 256,
+  "eventCount": 10000,
+  "tempo": 120
+}

@@ -1,0 +1,10 @@
+{
+  "sampleRate": 48000,
+  "channels": 2,
+  "frames": 768000,
+  "impulsePeriodFrames": 24000,
+  "impulseCount": 32,
+  "leftChannel": "silent",
+  "rightChannel": "6000 Hz decaying 10 ms transients at each quarter note of 120 BPM",
+  "license": "CC0-1.0"
+}

@@ -1,0 +1,17 @@
+{
+  "basis": "Self-authored musical contract; exact rational arithmetic, no importer output",
+  "ratio": {
+    "actual": 7,
+    "normal": 4
+  },
+  "writtenBase": 4,
+  "eventDurationQ": {
+    "n": "4",
+    "d": "7"
+  },
+  "eventsPerBar": 7,
+  "barSpanQ": {
+    "n": "4",
+    "d": "1"
+  }
+}

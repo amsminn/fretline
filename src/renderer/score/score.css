@@ -1,0 +1,53 @@
+@font-face {
+  font-family: alphaTab;
+  src: url('/font/Bravura.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+.score-view {
+  position: relative;
+  min-width: 0;
+  color: var(--paper-ink);
+  background: var(--paper);
+  contain: inline-size;
+}
+.score-view:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: calc(-1 * var(--focus-ring-width));
+}
+.score-canvas {
+  position: relative;
+  min-width: 0;
+}
+[data-testid="score-engine"] {
+  position: relative;
+  min-width: 100%;
+  background: var(--paper);
+}
+[data-testid="score-engine"] svg { overflow: visible; }
+.score-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+.score-overlay-selection, .score-overlay-note {
+  fill: var(--selection-fill);
+  stroke: var(--selection-edge);
+}
+.score-overlay-loop { fill: var(--loop-range); }
+.score-overlay-cursor { fill: var(--playback-cursor); }
+.score-tuplet {
+  fill: var(--paper-ink);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+}
+.score-tuplet path { fill: none; stroke: var(--paper-ink); }
+.score-tuplet text {
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: var(--grid);
+}
+.score-status { padding: calc(var(--grid) * 3); font-size: var(--text-xs); }
+.score-scroll { scrollbar-gutter: stable; }

@@ -1,0 +1,402 @@
+{
+  "fixtureSchemaVersion": 1,
+  "name": "alternate-endings",
+  "tempo": 120,
+  "systemBreakAfter": [],
+  "measures": [
+    {
+      "id": "d8c09f38-7af7-5388-ae0c-08616272912b",
+      "label": "m1",
+      "meter": [
+        4,
+        4
+      ],
+      "actualSpanQ": {
+        "n": "4",
+        "d": "1"
+      },
+      "repeatStart": true
+    },
+    {
+      "id": "9d7bce48-a223-5a7f-ac42-d8adf3b74701",
+      "label": "m2",
+      "meter": [
+        4,
+        4
+      ],
+      "actualSpanQ": {
+        "n": "4",
+        "d": "1"
+      }
+    },
+    {
+      "id": "7dd46769-5b5a-5f6e-a8b0-30c03a1e43a4",
+      "label": "m3",
+      "meter": [
+        4,
+        4
+      ],
+      "actualSpanQ": {
+        "n": "4",
+        "d": "1"
+      },
+      "repeatCount": 2,
+      "endings": [
+        1
+      ]
+    },
+    {
+      "id": "c3a77f31-4d8a-5fbe-abb9-6497388a099f",
+      "label": "m4",
+      "meter": [
+        4,
+        4
+      ],
+      "actualSpanQ": {
+        "n": "4",
+        "d": "1"
+      },
+      "endings": [
+        2
+      ]
+    },
+    {
+      "id": "be64639f-5f96-573a-a6a2-1bcc857e8e6a",
+      "label": "m5",
+      "meter": [
+        4,
+        4
+      ],
+      "actualSpanQ": {
+        "n": "4",
+        "d": "1"
+      }
+    }
+  ],
+  "tracks": [
+    {
+      "id": "7bf85b77-43cc-55f1-a635-7d9b46195e36",
+      "name": "Lead Guitar",
+      "tuning": [
+        64,
+        59,
+        55,
+        50,
+        45,
+        40
+      ],
+      "bars": [
+        [
+          {
+            "id": "ebccb3a9-a832-5602-a417-16b1ce5f45f5",
+            "label": "m1b1",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 48,
+            "string": 5,
+            "fret": 3
+          },
+          {
+            "id": "76b0f050-a69f-56cc-aa6f-0e26b54cedf3",
+            "label": "m1b2",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 49,
+            "string": 5,
+            "fret": 4
+          },
+          {
+            "id": "ae64f9df-77b7-5a31-affe-6a5d94d50513",
+            "label": "m1b3",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 50,
+            "string": 4,
+            "fret": 0
+          },
+          {
+            "id": "19b9123a-0f78-52b1-aa75-6fca0379c04c",
+            "label": "m1b4",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 51,
+            "string": 4,
+            "fret": 1
+          }
+        ],
+        [
+          {
+            "id": "a63c9e88-b834-5b92-aaec-8d215e07c844",
+            "label": "m2b1",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 52,
+            "string": 4,
+            "fret": 2
+          },
+          {
+            "id": "cfbf6c0c-f41e-54ca-a0ea-92e181aa2c83",
+            "label": "m2b2",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 53,
+            "string": 4,
+            "fret": 3
+          },
+          {
+            "id": "7cdcaf62-53c9-5cc6-ac0d-7b33883a944e",
+            "label": "m2b3",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 54,
+            "string": 4,
+            "fret": 4
+          },
+          {
+            "id": "281ab264-4ce2-587a-af59-4d5a25f214d5",
+            "label": "m2b4",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 55,
+            "string": 3,
+            "fret": 0
+          }
+        ],
+        [
+          {
+            "id": "052b8be5-d05d-55fc-aa01-2b112934fcdd",
+            "label": "m3b1",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 56,
+            "string": 3,
+            "fret": 1
+          },
+          {
+            "id": "8b08a2cc-2a4c-5f2d-ac9a-4f3d8f86e219",
+            "label": "m3b2",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 57,
+            "string": 3,
+            "fret": 2
+          },
+          {
+            "id": "70273e55-9e85-5f69-a7b5-9b1b9d8e512b",
+            "label": "m3b3",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 58,
+            "string": 3,
+            "fret": 3
+          },
+          {
+            "id": "5220d7d1-edf6-50d3-a40e-d314befe8b94",
+            "label": "m3b4",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 59,
+            "string": 2,
+            "fret": 0
+          }
+        ],
+        [
+          {
+            "id": "a467ba5d-a920-58ae-a562-c8a16e2f58d3",
+            "label": "m4b1",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 60,
+            "string": 2,
+            "fret": 1
+          },
+          {
+            "id": "1a61a6e1-d623-5375-aaca-62fe594444e4",
+            "label": "m4b2",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 61,
+            "string": 2,
+            "fret": 2
+          },
+          {
+            "id": "bc56137f-c886-599a-aa0d-ea8eb6aa48aa",
+            "label": "m4b3",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 62,
+            "string": 2,
+            "fret": 3
+          },
+          {
+            "id": "6aa6823c-773a-5eda-a389-00c6499358ca",
+            "label": "m4b4",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 63,
+            "string": 2,
+            "fret": 4
+          }
+        ],
+        [
+          {
+            "id": "365d1461-83fd-53e3-a786-46e03716dbd6",
+            "label": "m5b1",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 64,
+            "string": 1,
+            "fret": 0
+          },
+          {
+            "id": "b9e74f4d-7a2e-58b6-a4fd-7a30ee7f12a8",
+            "label": "m5b2",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 65,
+            "string": 1,
+            "fret": 1
+          },
+          {
+            "id": "e76e9503-2061-55e1-a1fc-6d43db0b1ff0",
+            "label": "m5b3",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 66,
+            "string": 1,
+            "fret": 2
+          },
+          {
+            "id": "fe149b2a-aa81-5733-ac70-72f56a3d8b82",
+            "label": "m5b4",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 67,
+            "string": 1,
+            "fret": 3
+          }
+        ]
+      ]
+    }
+  ]
+}

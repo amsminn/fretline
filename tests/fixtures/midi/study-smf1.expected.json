@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "trackCount": 2,
+  "ppq": 480,
+  "pitches": [64, 67],
+  "startQuarterNotes": [0, 1],
+  "durationQuarterNotes": [1, 1],
+  "velocities": [100, 80],
+  "tempoBpm": 120,
+  "program": 24,
+  "volumeController": 100
+}

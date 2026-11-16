@@ -1,0 +1,42 @@
+import { expect } from '@playwright/test';
+import { resolve } from 'node:path';
+import { writeFile } from 'node:fs/promises';
+import type { QaCase } from '../../lib/contracts';
+import { withImportApp, chooseThroughOpen, deliverOpenFile, inspectReport, acceptCopy } from './import-support';
+
+export const run: QaCase = async context => {
+  const corrupt = resolve(context.evidence, 'corrupt.gp');
+  await writeFile(corrupt, new Uint8Array([0, 1, 2, 3]));
+  await withImportApp(context, resolve('tests/fixtures/gp/gp8.gp'), async surface => {
+    await inspectReport(context, surface, 'gp8.gp');
+    await acceptCopy(context, surface);
+    const badge = surface.page.getByTestId('compatibility-badge');
+    const identity = await badge.getAttribute('data-project-id');
+    const hash = await badge.getAttribute('data-source-hash');
+    if (!identity || !hash) throw new TypeError('Active dirty document identity is missing');
+    await surface.page.screenshot({ path: resolve(context.evidence, 'before-dirty.png') });
+    await deliverOpenFile(context, surface, resolve('tests/fixtures/gp/gp7.gp'));
+    await inspectReport(context, surface, 'gp7.gp');
+    const unsupported = surface.page.locator('[data-feature="layout.appearance"]');
+    await expect(unsupported).toHaveCount(1);
+    await expect(unsupported).toContainText('표시 설정');
+    await expect(unsupported).toHaveAttribute('data-status', 'unsupported');
+    await expect(unsupported).not.toContainText('layout.appearance');
+    await surface.page.screenshot({ path: resolve(context.evidence, 'unknown-feature.png') });
+    await surface.page.getByRole('button', { name: '취소', exact: true }).click();
+    await expect(badge).toHaveAttribute('data-project-id', identity);
+    await expect(badge).toHaveAttribute('data-dirty', 'true');
+    context.assert(true, 'Cancelling an unsupported import preserves the existing dirty document');
+    await chooseThroughOpen(context, surface, null);
+    await expect(badge).toHaveAttribute('data-project-id', identity);
+    context.assert(true, 'Typed native-picker cancellation preserves active identity');
+    await deliverOpenFile(context, surface, corrupt);
+    await expect(surface.page.getByRole('alert')).toContainText('FORMAT');
+    await expect(badge).toHaveAttribute('data-project-id', identity);
+    await expect(badge).toHaveAttribute('data-source-hash', hash);
+    await expect(badge).toHaveAttribute('data-dirty', 'true');
+    await expect(surface.page.getByTestId('score-engine').locator('svg').first()).toBeVisible();
+    await surface.page.screenshot({ path: resolve(context.evidence, 'after-corrupt.png') });
+    context.assert(true, 'Corrupt actual bytes leave dirty document, source hash, and rendered score intact');
+  });
+};

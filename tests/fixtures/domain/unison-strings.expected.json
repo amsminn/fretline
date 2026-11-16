@@ -1,0 +1,26 @@
+{
+  "basis": "Self-authored musical contract; exact rational arithmetic, no importer output",
+  "firstBar": [
+    {
+      "midi": 64,
+      "string": 1,
+      "fret": 0
+    },
+    {
+      "midi": 64,
+      "string": 2,
+      "fret": 5
+    },
+    {
+      "midi": 64,
+      "string": 3,
+      "fret": 9
+    },
+    {
+      "midi": 64,
+      "string": 4,
+      "fret": 14
+    }
+  ],
+  "distinctNoteIds": 4
+}

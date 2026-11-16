@@ -1,0 +1,18 @@
+{
+  "basis": "Self-authored musical contract; exact rational arithmetic, no importer output",
+  "measureOrder": [
+    1,
+    2,
+    3,
+    4,
+    2,
+    3,
+    5,
+    6
+  ],
+  "jumpTakenOnce": true,
+  "totalSpanQ": {
+    "n": "32",
+    "d": "1"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "basis": {
+    "commit": "9f1aa10460df1b326123d28a2222f7b20d081e61",
+    "path": "packages/alphatab/test/importer/Gp4Importer.test.ts",
+    "case": "score-info"
+  },
+  "metadata": {
+    "title": "Title",
+    "subTitle": "Subtitle",
+    "artist": "Artist",
+    "album": "Album",
+    "words": "Music",
+    "music": "Music",
+    "copyright": "Copyright",
+    "tab": "Tab",
+    "instructions": "Instructions",
+    "notices": "Notice1\r\nNotice2"
+  },
+  "measureCount": 5,
+  "trackNames": [
+    "Track 1"
+  ]
+}

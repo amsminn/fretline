@@ -1,0 +1,172 @@
+{
+  "fixtureSchemaVersion": 1,
+  "name": "unison-strings",
+  "tempo": 120,
+  "systemBreakAfter": [],
+  "measures": [
+    {
+      "id": "65b7502a-a898-5fc8-aeb1-9c8e66ec87f8",
+      "label": "m1",
+      "meter": [
+        4,
+        4
+      ],
+      "actualSpanQ": {
+        "n": "4",
+        "d": "1"
+      }
+    },
+    {
+      "id": "48ad0cf3-dbd7-5c01-ac37-cbaf0924e0f6",
+      "label": "m2",
+      "meter": [
+        4,
+        4
+      ],
+      "actualSpanQ": {
+        "n": "4",
+        "d": "1"
+      }
+    }
+  ],
+  "tracks": [
+    {
+      "id": "6e28b665-3628-5a6b-afce-9514597e270d",
+      "name": "Lead Guitar",
+      "tuning": [
+        64,
+        59,
+        55,
+        50,
+        45,
+        40
+      ],
+      "bars": [
+        [
+          {
+            "id": "55dbf7a5-e264-5a91-a413-166ae1233ce1",
+            "label": "m1b1",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 64,
+            "string": 1,
+            "fret": 0
+          },
+          {
+            "id": "b229336e-0a46-5563-aed0-f8d2a8888250",
+            "label": "m1b2",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 64,
+            "string": 2,
+            "fret": 5
+          },
+          {
+            "id": "5ef3970b-ea30-5492-aa1a-d9b270ff0b12",
+            "label": "m1b3",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 64,
+            "string": 3,
+            "fret": 9
+          },
+          {
+            "id": "f3e967c6-f95a-58be-ae85-2014d79b1730",
+            "label": "m1b4",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 64,
+            "string": 4,
+            "fret": 14
+          }
+        ],
+        [
+          {
+            "id": "70c07f60-3040-53ef-a43a-a1d782ea889e",
+            "label": "m2b1",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 64,
+            "string": 1,
+            "fret": 0
+          },
+          {
+            "id": "c06e243e-1cc7-54fb-ac0c-5bfb64d21f0d",
+            "label": "m2b2",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 64,
+            "string": 2,
+            "fret": 5
+          },
+          {
+            "id": "ce34366d-f179-563e-a88c-ef5d7dcda77c",
+            "label": "m2b3",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 64,
+            "string": 3,
+            "fret": 9
+          },
+          {
+            "id": "01bc198d-374e-5dca-a5fa-8526c2d2e77f",
+            "label": "m2b4",
+            "durationQ": {
+              "n": "1",
+              "d": "1"
+            },
+            "writtenDuration": {
+              "base": 4,
+              "dots": 0
+            },
+            "midi": 64,
+            "string": 4,
+            "fret": 14
+          }
+        ]
+      ]
+    }
+  ]
+}

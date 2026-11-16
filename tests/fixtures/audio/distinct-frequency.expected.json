@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "bitsPerSample": 16,
+  "sampleRate": 48000,
+  "channels": 2,
+  "frames": 192000,
+  "frequenciesHz": [
+    440,
+    880
+  ],
+  "amplitude": 12000
+}

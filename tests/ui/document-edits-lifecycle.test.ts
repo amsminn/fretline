@@ -1,0 +1,74 @@
+import { afterEach, expect, it } from 'vitest';
+import { hashDocument } from '../../src/domain/history';
+import { indexDocument } from '../../src/domain/event-time';
+import { selectAt } from '../../src/renderer/editor/input';
+import { selectionStore } from '../../src/renderer/editor/selection-state';
+import { documentEdits } from '../../src/renderer/state/document-edits';
+import { fixtureId } from '../domain/fixtures';
+import { openFixture, services } from './shell-harness';
+
+afterEach(() => selectionStore.clear());
+
+it('keeps histories and selections separate across switches and Save As, and retires a closed session', async () => {
+  const context = services();
+  const edits = documentEdits(context);
+  const project = await openFixture(context.documents, 'loop-eight-bars', 'First');
+  const first = context.documents.getSnapshot().active;
+  const event = [...indexDocument(project.score).events.values()][0];
+  if (!first || !event) throw new RangeError('Missing first session');
+  const selected = selectAt(project.score, event, 1);
+  selectionStore.set(selected);
+  await edits.edit('first title', doc => ({ kind: 'structure', edit: { kind: 'metadata', metadata: { ...doc.metadata, title: 'First edited' } } }));
+  const firstHash = (await hashDocument(context.documents.getSnapshot().active?.project.score ?? project.score)).sha256;
+  await openFixture(context.documents, 'loop-eight-bars', 'Second');
+  const second = context.documents.getSnapshot().active;
+  if (!second) throw new RangeError('Missing second session');
+  expect(edits.getSnapshot()).toMatchObject({ past: 0, future: 0, canUndo: false });
+  await edits.edit('second title', doc => ({ kind: 'structure', edit: { kind: 'metadata', metadata: { ...doc.metadata, title: 'Second edited' } } }));
+  await edits.undo();
+  context.documents.activate(first.documentToken);
+  expect(selectionStore.getSnapshot().selection).toEqual(selected);
+  expect(edits.getSnapshot()).toMatchObject({ past: 1, future: 0 });
+  const captured = context.documents.getSnapshot().active;
+  if (!captured) throw new RangeError('Missing save capture');
+  const savedToken = fixtureId('document-capability', 'Save As destination');
+  context.documents.acknowledgeSave(captured, { kind: 'saved', documentToken: savedToken, fileName: 'First.fretline',
+    receipt: { revision: captured.revision, projectId: captured.project.projectId, contentHash: 'c'.repeat(64) } });
+  expect(edits.getSnapshot()).toMatchObject({ past: 1, future: 0 });
+  expect(context.documents.getSnapshot().active?.dirty).toBe(false);
+  await edits.undo();
+  expect(context.documents.getSnapshot().active?.project.score.metadata.title).toBe('First');
+  expect(context.documents.getSnapshot().active?.dirty).toBe(true);
+  await edits.redo();
+  expect((await hashDocument(context.documents.getSnapshot().active?.project.score ?? project.score)).sha256).toBe(firstHash);
+  expect(context.documents.getSnapshot().active?.dirty).toBe(false);
+  context.documents.activate(second.documentToken);
+  expect(edits.getSnapshot()).toMatchObject({ past: 0, future: 1 });
+  await edits.redo();
+  expect(context.documents.getSnapshot().active?.project.score.metadata.title).toBe('Second edited');
+  context.documents.close(savedToken);
+  await openFixture(context.documents, 'loop-eight-bars', 'First');
+  expect(edits.getSnapshot()).toMatchObject({ past: 0, future: 0, canUndo: false });
+});
+
+it('commits queued work to its originating document without moving the active document selection', async () => {
+  const context = services();
+  const edits = documentEdits(context);
+  await openFixture(context.documents, 'loop-eight-bars', 'Origin');
+  const origin = context.documents.getSnapshot().active;
+  if (!origin) throw new RangeError('Missing origin');
+  await openFixture(context.documents, 'loop-eight-bars', 'Destination');
+  const destination = context.documents.getSnapshot().active;
+  if (!destination) throw new RangeError('Missing destination');
+  context.documents.activate(origin.documentToken);
+  const edit = edits.edit('queued title', doc => ({ kind: 'structure', edit: { kind: 'metadata', metadata: { ...doc.metadata, title: 'Origin queued' } } }));
+  context.documents.activate(destination.documentToken);
+  const result = await edit;
+  expect(result.kind).toBe('applied');
+  expect(context.documents.getSnapshot().active?.project.score.metadata.title).toBe('Destination');
+  expect(selectionStore.getSnapshot().selection).toBeNull();
+  context.documents.activate(origin.documentToken);
+  expect(context.documents.getSnapshot().active?.project.score.metadata.title).toBe('Origin queued');
+  await edits.undo();
+  expect(context.documents.getSnapshot().active?.project.score.metadata.title).toBe('Origin');
+});

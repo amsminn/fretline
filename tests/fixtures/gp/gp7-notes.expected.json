@@ -1,0 +1,183 @@
+{
+  "basis": {
+    "commit": "9f1aa10460df1b326123d28a2222f7b20d081e61",
+    "path": "packages/alphatab/test/importer/GpImporterTestHelper.ts",
+    "method": "checkNotes"
+  },
+  "voice": {
+    "track": 0,
+    "staff": 0,
+    "measure": 0,
+    "voice": 0
+  },
+  "groups": [
+    {
+      "writtenBase": 1,
+      "beats": [
+        {
+          "string": 1,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 4
+        },
+        {
+          "rest": true
+        }
+      ]
+    },
+    {
+      "writtenBase": 2,
+      "beats": [
+        {
+          "string": 1,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 4
+        },
+        {
+          "rest": true
+        }
+      ]
+    },
+    {
+      "writtenBase": 4,
+      "beats": [
+        {
+          "string": 1,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 4
+        },
+        {
+          "rest": true
+        }
+      ]
+    },
+    {
+      "writtenBase": 8,
+      "beats": [
+        {
+          "string": 1,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 4
+        },
+        {
+          "rest": true
+        }
+      ]
+    },
+    {
+      "writtenBase": 16,
+      "beats": [
+        {
+          "string": 1,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 4
+        },
+        {
+          "rest": true
+        }
+      ]
+    },
+    {
+      "writtenBase": 32,
+      "beats": [
+        {
+          "string": 1,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 4
+        },
+        {
+          "rest": true
+        }
+      ]
+    },
+    {
+      "writtenBase": 64,
+      "beats": [
+        {
+          "string": 1,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 4
+        },
+        {
+          "rest": true
+        }
+      ]
+    }
+  ]
+}

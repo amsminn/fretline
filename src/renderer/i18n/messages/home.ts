@@ -1,0 +1,26 @@
+import type { MessageTable } from '../index';
+
+export const homeMessages = {
+  'home.title': ['Fretline', 'Fretline'],
+  'home.new': ['새 악보', 'New score'],
+  'home.template.guitar': ['기타', 'Guitar'],
+  'home.template.bass': ['베이스', 'Bass'],
+  'home.template.drums': ['드럼', 'Drums'],
+  'home.template.guitar.detail': ['6현 · 표준 튜닝 · 악보 + 타브', '6 strings · standard tuning · staff + tab'],
+  'home.template.bass.detail': ['4현 · 낮은음자리표 · 악보 + 타브', '4 strings · bass clef · staff + tab'],
+  'home.template.drums.detail': ['드럼 보표 · GM 드럼 키트', 'Drum staff · GM drum kit'],
+  'home.open': ['파일 열기…', 'Open file…'],
+  'home.recent': ['최근 문서', 'Recent documents'],
+  'home.pinned': ['고정됨', 'Pinned'],
+  'home.recent.empty': ['최근에 연 문서가 없습니다.', 'No recent documents.'],
+  'home.recent.missing': ['파일을 찾을 수 없음', 'File not found'],
+  'home.pin': ['고정', 'Pin'],
+  'home.unpin': ['고정 해제', 'Unpin'],
+  'home.remove': ['목록에서 제거', 'Remove from list'],
+  'home.preferences': ['설정', 'Preferences'],
+  'newScore.title': ['새 악보', 'New score'],
+  'newScore.description': ['템플릿과 제목을 고르면 바로 편집할 수 있는 빈 악보가 열립니다.', 'Choose a template and title to open an empty, editable score.'],
+  'newScore.name': ['제목', 'Title'],
+  'newScore.template': ['템플릿', 'Template'],
+  'newScore.create': ['만들기', 'Create'],
+} as const satisfies MessageTable;

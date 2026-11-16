@@ -1,0 +1,41 @@
+appId: app.fretline.desktop
+productName: Fretline
+directories:
+  output: dist
+  buildResources: build
+beforePack: build/notices.mjs
+extraResources:
+  - from: build/notices
+    to: third-party-notices
+  - from: NOTICE
+    to: NOTICE
+files:
+  - out/main/**
+  - out/preload/**
+  - out/renderer/**
+  - package.json
+  - "!node_modules/**"
+asar: true
+asarUnpack:
+  - out/renderer/soundfont/**
+npmRebuild: false
+artifactName: "${productName}-${version}-${arch}.${ext}"
+mac:
+  icon: build/icon.icns
+  category: public.app-category.music
+  identity: null
+  hardenedRuntime: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  notarize: false
+  extendInfo:
+    NSMicrophoneUsageDescription: Fretline uses the microphone only for the instrument tuner.
+  target:
+    - target: dir
+      arch: [arm64]
+    - target: dmg
+      arch: [arm64]
+win:
+  target: [nsis]
+linux:
+  target: [AppImage]

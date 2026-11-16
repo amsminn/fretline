@@ -1,0 +1,48 @@
+import { expect } from '@playwright/test';
+import { resolve } from 'node:path';
+import type { QaCase } from '../../lib/contracts';
+import { withElectron } from '../../lib/electron';
+import { createThroughDialog, enterFirstNote, stubSaveDialog } from './session-support';
+import { chooseThroughOpen } from './import-support';
+import { captureCoverage } from './coverage-support';
+import { contentHash, ready } from './journey-support';
+import { inspectArchive } from './recovery-support';
+import { hashDocument } from '../../../../src/domain/content-hash';
+
+export const run: QaCase = context => withElectron(context, async surface => {
+  const { page } = surface;
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await createThroughDialog(page, 'Tab coverage');
+  const tabs = page.getByTestId('document-tab');
+  await expect(tabs).toHaveCount(1); await expect(tabs.first()).toHaveAttribute('data-dirty', 'false');
+  await enterFirstNote(context, page, '7');
+  await expect(tabs.first().getByTestId('dirty-dot')).toHaveAttribute('aria-label', '저장되지 않은 변경');
+  const destination = resolve(context.evidence, 'tabs.fretline');
+  await stubSaveDialog(surface, destination);
+  const savedHash = await contentHash(page);
+  await tabs.first().hover();
+  await tabs.first().locator('[data-command="file.save"]').click();
+  await expect(tabs.first()).toHaveAttribute('data-dirty', 'false');
+  context.assert((await hashDocument((await inspectArchive(destination)).score)).sha256 === savedHash,
+    'The tab Save control writes exactly the edited score, independently decoded from ZIP');
+  await tabs.first().hover();
+  await tabs.first().locator('[data-command="file.close"]').click();
+  await expect(tabs).toHaveCount(0);
+  await chooseThroughOpen(context, surface, destination);
+  await ready(page); await expect(tabs).toHaveCount(1);
+  context.assert(await contentHash(page) === savedHash, 'Cmd+O reopens the saved tab with identical music');
+  await createThroughDialog(page, 'Unsaved tab');
+  await enterFirstNote(context, page, '5');
+  await captureCoverage(context, page, 'dirty-tabs');
+  await page.keyboard.press('Meta+Shift+w');
+  const prompt = page.getByTestId('save-changes-dialog');
+  await expect(prompt).toBeVisible(); await expect(prompt).toContainText('Unsaved tab');
+  await prompt.getByRole('button', { name: '취소', exact: true }).click();
+  await expect(prompt).toBeHidden(); await expect(tabs).toHaveCount(2);
+  await stubSaveDialog(surface, resolve(context.evidence, 'second.fretline'));
+  await page.keyboard.press('Meta+s');
+  await expect(tabs.last()).toHaveAttribute('data-dirty', 'false');
+  await page.keyboard.press('Meta+Shift+w');
+  await expect(tabs).toHaveCount(0);
+  context.assert(true, 'Dirty dot, tab close/save, close-all, save-changes Cancel, and Cmd+N/O/S work in the shell');
+});

@@ -1,0 +1,10 @@
+{
+  "title": "Interchange Study",
+  "pitches": [64, 59, 64, 65, 67, 69, 40],
+  "tempoBpm": [120, 90],
+  "tieCount": 1,
+  "tupletRatio": [3, 2],
+  "lyric": "Test & sing",
+  "tuning": [64, 59, 55, 50, 45, 40],
+  "voiceNumbers": [1, 2]
+}

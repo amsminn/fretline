@@ -1,0 +1,15 @@
+{
+  "format": 1,
+  "bitsPerSample": 16,
+  "sampleRate": 48000,
+  "channels": 2,
+  "frames": 192000,
+  "impulseFrames": [
+    0,
+    48000,
+    96000,
+    144000
+  ],
+  "impulseAmplitude": 24000,
+  "otherSamples": 0
+}

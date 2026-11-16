@@ -1,0 +1,54 @@
+{
+  "basis": "Self-authored musical contract; exact rational arithmetic, no importer output",
+  "measureCount": 8,
+  "trackCount": 3,
+  "eventCount": 96,
+  "tempo": 120,
+  "systemBreakAfter": [
+    4
+  ],
+  "ranges": [
+    {
+      "from": "m2b2",
+      "through": "m3b3",
+      "startQ": {
+        "n": "5",
+        "d": "1"
+      },
+      "endQ": {
+        "n": "11",
+        "d": "1"
+      },
+      "seconds": 3,
+      "secondsAtHalfSpeed": 6,
+      "labels": [
+        "m2b2",
+        "m2b3",
+        "m2b4",
+        "m3b1",
+        "m3b2",
+        "m3b3"
+      ],
+      "excluded": [
+        "m2b1",
+        "m3b4"
+      ],
+      "reverseSame": true
+    },
+    {
+      "from": "m4b3",
+      "through": "m5b2",
+      "startQ": {
+        "n": "14",
+        "d": "1"
+      },
+      "endQ": {
+        "n": "18",
+        "d": "1"
+      },
+      "seconds": 2
+    }
+  ],
+  "completedCycles": 3,
+  "endpointToleranceAudioFrames": 128
+}

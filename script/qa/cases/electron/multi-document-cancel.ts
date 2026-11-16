@@ -1,0 +1,113 @@
+import { expect } from '@playwright/test';
+import { mkdir, rm, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import type { QaCase } from '../../lib/contracts';
+import { clickMenuItem, closeThroughWindow, createFromTemplate, createThroughDialog, enterFirstNote, expectStillRunning, loopObservation, quitThroughMenu, saveAs, stubSaveDialog, waitForExit, withSessionApp } from './session-support';
+
+export const run: QaCase = async context => {
+  const userData = resolve(context.evidence, 'userData');
+  await mkdir(userData, { recursive: true });
+  const first = resolve(context.evidence, 'First.fretline');
+  const receipt = await withSessionApp(context, userData, async surface => {
+    const { page, application } = surface;
+    await createFromTemplate(page, 'guitar');
+    await enterFirstNote(context, page, '5');
+    await saveAs(context, surface, first);
+    const cleanTab = page.getByTestId('document-tab').first();
+    await expect(cleanTab).toHaveAttribute('data-dirty', 'false');
+    const firstLoop = await loopObservation(page);
+    context.assert(firstLoop?.enabled === false, `First document has no loop (${JSON.stringify(firstLoop)})`);
+    await createThroughDialog(page, 'Second');
+    await expect(page.getByTestId('document-tab')).toHaveCount(2);
+    await enterFirstNote(context, page, '7');
+    const dirtyTab = page.getByTestId('document-tab').nth(1);
+    await expect(dirtyTab).toHaveAttribute('data-dirty', 'true');
+    await page.keyboard.press('Meta+a');
+    await page.keyboard.press('F9');
+    await expect.poll(() => loopObservation(page)).toMatchObject({ enabled: true, selectionKind: 'timeRange' });
+    const secondLoop = await loopObservation(page);
+    context.log(`Second document loop: ${JSON.stringify(secondLoop)}`);
+    await cleanTab.click();
+    await expect(cleanTab).toHaveAttribute('aria-selected', 'true');
+    await expect.poll(() => loopObservation(page)).toEqual(firstLoop);
+    context.assert(true, 'Switching to the first document shows its own parked state without a loop: loop state did not move between documents');
+    await dirtyTab.click();
+    await expect.poll(() => loopObservation(page)).toEqual(secondLoop);
+    context.assert(true, 'Switching back restores the second document\'s own loop and selection');
+    await page.screenshot({ path: resolve(context.evidence, 'two-documents-loop.png') });
+
+    await rm(first);
+    context.log(`Deleted ${first} on disk while it is still listed as recent`);
+    await clickMenuItem(application, 'file.recent');
+    await expect(page.getByTestId('recent-dialog')).toBeVisible();
+    const missing = page.getByTestId('recent-dialog').locator('[data-recent-name="First.fretline"]');
+    await expect(missing).toHaveAttribute('data-exists', 'false');
+    await page.screenshot({ path: resolve(context.evidence, 'recent-missing.png') });
+    await missing.click();
+    await expect(page.getByTestId('document-error')).toContainText('파일을 찾을 수 없습니다');
+    await expect(page.getByTestId('document-tab')).toHaveCount(2);
+    await expect(dirtyTab).toHaveAttribute('aria-selected', 'true');
+    await expect(dirtyTab).toHaveAttribute('data-dirty', 'true');
+    expect(await loopObservation(page)).toEqual(secondLoop);
+    const recent = await page.evaluate(() => window.desktop.recentFiles());
+    context.assert(!recent.some(file => file.name === 'First.fretline'), 'The vanished file is reported and dropped from the recent list');
+    context.assert(true, 'A vanished recent file loses no open document, keeps the active tab and leaves the loop where it was');
+    await expect(page.getByTestId('recent-dialog')).toBeHidden();
+    context.assert(true, 'The recent dialog closes itself after the failed open; no Escape reaches the score');
+
+    await page.keyboard.press('Meta+Shift+w');
+    const prompt = page.getByTestId('save-changes-dialog');
+    await expect(prompt).toBeVisible();
+    await expect(prompt).toContainText('Second');
+    await page.screenshot({ path: resolve(context.evidence, 'close-all-prompt.png') });
+    await prompt.getByRole('button', { name: '취소' }).click();
+    await expect(prompt).toBeHidden();
+    await expect(page.getByTestId('document-tab')).toHaveCount(2);
+    await expect(dirtyTab).toHaveAttribute('data-dirty', 'true');
+    await expect(cleanTab).toHaveAttribute('data-dirty', 'false');
+    expect(await loopObservation(page)).toEqual(secondLoop);
+    context.assert(true, 'Cancelling close-all keeps both documents open, the dirty state intact and the loop unchanged');
+    await cleanTab.click();
+    await expect.poll(() => loopObservation(page)).toEqual(firstLoop);
+    context.assert(true, 'After the cancelled close-all the clean document still has no loop of its own');
+    await page.screenshot({ path: resolve(context.evidence, 'after-cancel.png') });
+
+    await quitThroughMenu(application);
+    await expect(prompt).toBeVisible();
+    await expect(prompt).toContainText('Second');
+    await page.screenshot({ path: resolve(context.evidence, 'quit-prompt.png') });
+    // The unresponsive-renderer deadline is 3 s; a user reading the prompt longer than that must keep the window.
+    await page.waitForTimeout(3_500);
+    const alive = await application.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows().filter(window => !window.isDestroyed()).length);
+    context.assert(alive === 1 && !page.isClosed() && await prompt.isVisible(), 'The save-changes prompt held open for more than 3 s keeps the window; elapsed time is not approval');
+    await page.screenshot({ path: resolve(context.evidence, 'quit-prompt-after-3s.png') });
+    await prompt.getByRole('button', { name: '취소' }).click();
+    await expectStillRunning(page);
+    await expect(page.getByTestId('document-tab')).toHaveCount(2);
+    await expect(dirtyTab).toHaveAttribute('data-dirty', 'true');
+    context.assert(true, 'File > 종료 (Cmd+Q) with a dirty document shows the in-app save-changes prompt; 취소 keeps both documents and the app running');
+
+    await closeThroughWindow(application);
+    await expect(prompt).toBeVisible();
+    await stubSaveDialog(surface, null);
+    await prompt.getByRole('button', { name: '저장', exact: true }).click();
+    await expectStillRunning(page);
+    await expect(page.getByTestId('document-tab')).toHaveCount(2);
+    await expect(dirtyTab).toHaveAttribute('data-dirty', 'true');
+    context.assert(true, 'Window close -> 저장 on an untitled document opens the save picker; cancelling the picker aborts the close and keeps everything open');
+
+    await closeThroughWindow(application);
+    await expect(prompt).toBeVisible();
+    await prompt.getByRole('button', { name: '저장 안 함' }).click();
+    const exitCode = await waitForExit(application);
+    context.assert(exitCode === 0, `Window close -> 저장 안 함 discards the dirty document and the process exits (code ${exitCode})`);
+  });
+  context.assert(receipt.exitCode === 0, 'The discard path exited cleanly');
+  await withSessionApp(context, userData, async ({ page }) => {
+    await expect(page.getByTestId('home')).toBeVisible();
+    await expect(page.getByTestId('recovery-dialog')).toHaveCount(0);
+    context.assert(await page.getByTestId('document-tab').count() === 0, 'Relaunch after 저장 안 함 offers no recovery for the discarded document and opens on the Home');
+    await page.screenshot({ path: resolve(context.evidence, 'after-discard-relaunch.png') });
+  });
+  await writeFile(resolve(context.evidence, 'session.json'), JSON.stringify(receipt, null, 2));
+};

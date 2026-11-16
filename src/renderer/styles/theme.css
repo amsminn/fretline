@@ -1,0 +1,74 @@
+@custom-variant hover (&:hover, .spec-hover &);
+@custom-variant active (&:active, .spec-active &);
+@custom-variant focus-visible (&:focus-visible, .spec-focus-visible &);
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg-app);
+    color: var(--fg-default);
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    font-feature-settings: "tnum" 1;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  input,
+  textarea,
+  [contenteditable="true"] {
+    user-select: text;
+  }
+
+  ::selection {
+    background: var(--selection-fill);
+    color: var(--fg-default);
+  }
+
+  :focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-default);
+    border: 2px solid var(--bg-panel);
+    border-radius: var(--radius-lg);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--border-strong);
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    appearance: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

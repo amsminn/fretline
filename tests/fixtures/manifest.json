@@ -1,0 +1,368 @@
+{
+  "schemaVersion": 1,
+  "fixtures": [
+    {
+      "id": "musicxml-voices-ties",
+      "path": "musicxml/voices-ties.musicxml",
+      "expected": "musicxml/voices-ties.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "self-authored task26"
+      },
+      "sha256": "f064ed3fec9acd82eaf43affc77096f925b3626fb1fbbb54c48c5234cf56ddda",
+      "expectedSha256": "c407f74638f7636be264ef889f1fb853f5ca6b9a1c2d3a3888d8015517ee714c"
+    },
+    {
+      "id": "midi-smf0-study",
+      "path": "midi/study-smf0.hex",
+      "expected": "midi/study.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "self-authored task26"
+      },
+      "sha256": "8d37363fbf7ebb32d560db2cd7343ebccc167325e195cb673d12eacf048c6c47",
+      "expectedSha256": "06c027506728eb06c6ccba3b8ee976f65840b73d286e2497309cb1bff7f710ef"
+    },
+    {
+      "id": "midi-smf1-study",
+      "path": "midi/study-smf1.hex",
+      "expected": "midi/study-smf1.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "self-authored task26"
+      },
+      "sha256": "e639cdc5ac36c9931dbf9599842739e90b46f11d5701e12668fbdf3e0dfe8d81",
+      "expectedSha256": "b52017b1833ec99f29257054740dc117257486d5aa688679097cb2070d28e4e4"
+    },
+    {
+      "id": "musicxml-4-schema",
+      "path": "musicxml/schema/musicxml.xsd",
+      "expected": "musicxml/schema/musicxml.expected.json",
+      "source": {
+        "license": "W3C-Community-FSA",
+        "generator": "https://github.com/w3c/musicxml/tree/v4.0/schema"
+      },
+      "sha256": "b151d97b92ce96b6317b57a89b471601c74270ae6e078145477a977393a64193",
+      "expectedSha256": "a85935850e4fda213381d9d1f407ea5024225ea638e670005ceaae39238e80e2"
+    },
+    {
+      "id": "musicxml-4-xml-schema",
+      "path": "musicxml/schema/xml.xsd",
+      "expected": "musicxml/schema/xml.expected.json",
+      "source": {
+        "license": "W3C-Community-FSA",
+        "generator": "https://github.com/w3c/musicxml/tree/v4.0/schema"
+      },
+      "sha256": "616a3077df5cfc954ac74a75abe9697b95eef7a85dbe09367d995a483e840eb5",
+      "expectedSha256": "4a5b13ab584af6c7f53fe5b95d40a6f0cde9c11fd9ed7d7c8d95a66f41c11a3f"
+    },
+    {
+      "id": "musicxml-4-xlink-schema",
+      "path": "musicxml/schema/xlink.xsd",
+      "expected": "musicxml/schema/xlink.expected.json",
+      "source": {
+        "license": "W3C-Community-FSA",
+        "generator": "https://github.com/w3c/musicxml/tree/v4.0/schema"
+      },
+      "sha256": "6d889dcf39f90695e03819a3e5c88faedf0123b669965d6255b0bdfa0793f0ff",
+      "expectedSha256": "75bcc49faf425e7eea46018f580ff63e517036134cdc1635d3ae6d7c39899738"
+    },
+    {
+      "id": "loop-eight-bars",
+      "path": "domain/loop-eight-bars.json",
+      "expected": "domain/loop-eight-bars.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "domain/generate.ts"
+      },
+      "sha256": "f09e64660e3f1993967439f1783adbc8dca49b8378c8309a0145bfb3042b74c0",
+      "expectedSha256": "41fc43f2f2df15c1600e9e738de9dc0319bb7e1a6a63ad63041a2a579c193a91"
+    },
+    {
+      "id": "seven-four",
+      "path": "domain/seven-four.json",
+      "expected": "domain/seven-four.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "domain/generate.ts"
+      },
+      "sha256": "6c998118a1ba25070e5f12f69f99794bc4655f57c812883d794c00470018315b",
+      "expectedSha256": "b70fd85caca60db6c2fc412264d4adf23cb794eaedf18052cddd55b138af9630"
+    },
+    {
+      "id": "pickup-6-8",
+      "path": "domain/pickup-6-8.json",
+      "expected": "domain/pickup-6-8.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "domain/generate.ts"
+      },
+      "sha256": "4555f96bc0ce70a6a0ce013cbcc97bfcbfcf51fcae9c359735a80e1899b16892",
+      "expectedSha256": "9d57d0337cb3755dac976c73d3bc585c9cd3783c5226821541879bae5a6eb383"
+    },
+    {
+      "id": "alternate-endings",
+      "path": "domain/alternate-endings.json",
+      "expected": "domain/alternate-endings.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "domain/generate.ts"
+      },
+      "sha256": "4bef57e7710a96267162c736d9586eb9ed4115cdf34910d8be9e890965791242",
+      "expectedSha256": "28c00d7ef60cab38dc49ad140cda06fc1a8f49da78081162f83ac8ae731e4a87"
+    },
+    {
+      "id": "ds-al-coda",
+      "path": "domain/ds-al-coda.json",
+      "expected": "domain/ds-al-coda.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "domain/generate.ts"
+      },
+      "sha256": "c3dc4f6c72f877a995fa69eb7307da452df872789a0c8a39ebe675e5a9fde83d",
+      "expectedSha256": "1cb98f0435f171dde6158c44f95e943d46e63a19dbc4f263101500bac917d128"
+    },
+    {
+      "id": "unison-strings",
+      "path": "domain/unison-strings.json",
+      "expected": "domain/unison-strings.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "domain/generate.ts"
+      },
+      "sha256": "ff17bd5c6c05cd03d523c00718bfd84b151cb3207c60ea50ef7d5cbeacec6d47",
+      "expectedSha256": "81aaffa80be7244c34f446a33a7f44464c2fa32a4df74cecfd7b9ca55dd0d3a3"
+    },
+    {
+      "id": "perf",
+      "path": "domain/perf.json",
+      "expected": "domain/perf.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "domain/generate.ts"
+      },
+      "sha256": "4107814297cf1f47f97d5838de97b7cedb5c7777568538b1762c874b97fb5ea9",
+      "expectedSha256": "70204764663043ee62b17e49a7adb08d0923c614b528193ccad35696822a0200"
+    },
+    {
+      "id": "backing-quarter",
+      "path": "audio/backing-quarter.wav",
+      "expected": "audio/backing-quarter.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "audio/generate.ts"
+      },
+      "sha256": "e1270edc3d4ebd14336400c0dc847fa252aae08ef5bcf0cbd37f4dee29b268cd",
+      "expectedSha256": "7416ce6cded51263380c0ad662e8c7f46966c56a8b24555971469df2e36ec82d"
+    },
+    {
+      "id": "impulse",
+      "path": "audio/impulse.wav",
+      "expected": "audio/impulse.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "audio/generate.ts"
+      },
+      "sha256": "4991ac188d426430074ef192360493ecbec3711ed87f0f6a1ea6d974921092bb",
+      "expectedSha256": "09a6cac5030aef5a15f9c9b9af7f782d0875c09dfd9aabbae52f78a0668d5875"
+    },
+    {
+      "id": "distinct-frequency",
+      "path": "audio/distinct-frequency.wav",
+      "expected": "audio/distinct-frequency.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "audio/generate.ts"
+      },
+      "sha256": "b6166cabf2446199d964dbee0c90538310cc700a2e990d5a2df854e3e99591e7",
+      "expectedSha256": "22ae5e4a3f4676b886ef36f386d0753d94eecc2d4c3b9f61a8aab2a4a9d0569f"
+    },
+    {
+      "id": "truncated",
+      "path": "archives/truncated.zip",
+      "expected": "archives/truncated.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "generate.ts"
+      },
+      "sha256": "f0bf6df5f2ac08fc07433f0fc50a0b0621ddd0713a034da33d342ca50d7a3f7f",
+      "expectedSha256": "bed4a34b27b4898c253341242c80c9fb247f72afcff0071268db7b3a069da264"
+    },
+    {
+      "id": "traversal",
+      "path": "archives/traversal.zip",
+      "expected": "archives/traversal.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "generate.ts"
+      },
+      "sha256": "005a5bf0d31499ee95b62baf9342f45e30093cbf5ffdacca9505d56f276cc7d4",
+      "expectedSha256": "0473556904b17a9443659fd6be1653a51252acc34ae27e8245166a81e6fd3c33"
+    },
+    {
+      "id": "duplicate",
+      "path": "archives/duplicate.zip",
+      "expected": "archives/duplicate.expected.json",
+      "source": {
+        "license": "CC0-1.0",
+        "generator": "generate.ts"
+      },
+      "sha256": "7afcd407402f182822082351772887bb5393b1678895134960e25d3b3088e95c",
+      "expectedSha256": "1d580dfe165237d88498712c57411964460917c56d58b93bc1272964afb9eebd"
+    },
+    {
+      "id": "gp3",
+      "path": "gp/gp3.gp3",
+      "expected": "gp/gp3.expected.json",
+      "source": {
+        "repository": "CoderLine/alphaTab",
+        "commit": "9f1aa10460df1b326123d28a2222f7b20d081e61",
+        "license": "MPL-2.0",
+        "licenseFile": "gp/LICENSE.MPL-2.0",
+        "path": "packages/alphatab/test-data/guitarpro3/score-info.gp3"
+      },
+      "sha256": "747ec00f760079ce263f9d2804c5084ed37c9f7f0682a7d3c4966da2dddbf44d",
+      "expectedSha256": "64c6216e5407e65889382b93c78dc0fc89137016bb0ca3d41ba145da101abef4"
+    },
+    {
+      "id": "gp3-notes",
+      "path": "gp/gp3-notes.gp3",
+      "expected": "gp/gp3-notes.expected.json",
+      "source": {
+        "repository": "CoderLine/alphaTab",
+        "commit": "9f1aa10460df1b326123d28a2222f7b20d081e61",
+        "license": "MPL-2.0",
+        "licenseFile": "gp/LICENSE.MPL-2.0",
+        "path": "packages/alphatab/test-data/guitarpro3/notes.gp3"
+      },
+      "sha256": "a9ae6bb06ed259016e7a138a1b17d850491e9e2e8510c235df28a9ec81a706f1",
+      "expectedSha256": "1950d2bd19c28fd231ccb90d605df0fdfcb28370788cea30fe16deab31902ea8"
+    },
+    {
+      "id": "gp4",
+      "path": "gp/gp4.gp4",
+      "expected": "gp/gp4.expected.json",
+      "source": {
+        "repository": "CoderLine/alphaTab",
+        "commit": "9f1aa10460df1b326123d28a2222f7b20d081e61",
+        "license": "MPL-2.0",
+        "licenseFile": "gp/LICENSE.MPL-2.0",
+        "path": "packages/alphatab/test-data/guitarpro4/score-info.gp4"
+      },
+      "sha256": "ba4bd24ca5f5408c18fc318eba2569ba46fb55d7e83ba8f85bc0d2e90d0f3116",
+      "expectedSha256": "857af78b872c8afeee0c6d00ef5eaf1a71324748407505eb8fa453cf847a51b8"
+    },
+    {
+      "id": "gp4-notes",
+      "path": "gp/gp4-notes.gp4",
+      "expected": "gp/gp4-notes.expected.json",
+      "source": {
+        "repository": "CoderLine/alphaTab",
+        "commit": "9f1aa10460df1b326123d28a2222f7b20d081e61",
+        "license": "MPL-2.0",
+        "licenseFile": "gp/LICENSE.MPL-2.0",
+        "path": "packages/alphatab/test-data/guitarpro4/notes.gp4"
+      },
+      "sha256": "4f918d90aed2bdd12d229e612637b6f470a409771c805cc648c0682028f9125e",
+      "expectedSha256": "1950d2bd19c28fd231ccb90d605df0fdfcb28370788cea30fe16deab31902ea8"
+    },
+    {
+      "id": "gp5",
+      "path": "gp/gp5.gp5",
+      "expected": "gp/gp5.expected.json",
+      "source": {
+        "repository": "CoderLine/alphaTab",
+        "commit": "9f1aa10460df1b326123d28a2222f7b20d081e61",
+        "license": "MPL-2.0",
+        "licenseFile": "gp/LICENSE.MPL-2.0",
+        "path": "packages/alphatab/test-data/guitarpro5/score-info.gp5"
+      },
+      "sha256": "c36e489d5d0aaeb135d7ef6798a1974b1b2e1c9f6411ac4e89393b51aeced70f",
+      "expectedSha256": "e103f2e09ddf442134269f55b8e0472a29358a8a3aa26ee5f0a41a8527fa9e2f"
+    },
+    {
+      "id": "gp5-notes",
+      "path": "gp/gp5-notes.gp5",
+      "expected": "gp/gp5-notes.expected.json",
+      "source": {
+        "repository": "CoderLine/alphaTab",
+        "commit": "9f1aa10460df1b326123d28a2222f7b20d081e61",
+        "license": "MPL-2.0",
+        "licenseFile": "gp/LICENSE.MPL-2.0",
+        "path": "packages/alphatab/test-data/guitarpro5/notes.gp5"
+      },
+      "sha256": "74b6be1b298a86739ddb5745042901ced61cb8509ab282807048545f48177e27",
+      "expectedSha256": "1950d2bd19c28fd231ccb90d605df0fdfcb28370788cea30fe16deab31902ea8"
+    },
+    {
+      "id": "gp6",
+      "path": "gp/gp6.gpx",
+      "expected": "gp/gp6.expected.json",
+      "source": {
+        "repository": "CoderLine/alphaTab",
+        "commit": "9f1aa10460df1b326123d28a2222f7b20d081e61",
+        "license": "MPL-2.0",
+        "licenseFile": "gp/LICENSE.MPL-2.0",
+        "path": "packages/alphatab/test-data/guitarpro6/score-info.gpx"
+      },
+      "sha256": "c1421d86b924aef0de01258afae7ad95caf88b40ff0bf28c2a3f3fdb252a2cf7",
+      "expectedSha256": "ce5d4e118a15572989302e47a2ef38940f31d20c51e98df18e2eaceab9c266ca"
+    },
+    {
+      "id": "gp6-notes",
+      "path": "gp/gp6-notes.gpx",
+      "expected": "gp/gp6-notes.expected.json",
+      "source": {
+        "repository": "CoderLine/alphaTab",
+        "commit": "9f1aa10460df1b326123d28a2222f7b20d081e61",
+        "license": "MPL-2.0",
+        "licenseFile": "gp/LICENSE.MPL-2.0",
+        "path": "packages/alphatab/test-data/guitarpro6/notes.gpx"
+      },
+      "sha256": "b437b7a2b3e212822acadd67877807baee48837ea76d9b737bfbf9f5db9c07fc",
+      "expectedSha256": "1950d2bd19c28fd231ccb90d605df0fdfcb28370788cea30fe16deab31902ea8"
+    },
+    {
+      "id": "gp7",
+      "path": "gp/gp7.gp",
+      "expected": "gp/gp7.expected.json",
+      "source": {
+        "repository": "CoderLine/alphaTab",
+        "commit": "9f1aa10460df1b326123d28a2222f7b20d081e61",
+        "license": "MPL-2.0",
+        "licenseFile": "gp/LICENSE.MPL-2.0",
+        "path": "packages/alphatab/test-data/guitarpro7/score-info.gp"
+      },
+      "sha256": "8ca9ecb2210a0a7f0fe167486bac06ec237d6966f2b6d63018c5d8b2436ffa62",
+      "expectedSha256": "bd2c68a7845c7e695347f8b94cbf3e1d03d163fda7e2861072dc3e7ece1f7cb1"
+    },
+    {
+      "id": "gp7-notes",
+      "path": "gp/gp7-notes.gp",
+      "expected": "gp/gp7-notes.expected.json",
+      "source": {
+        "repository": "CoderLine/alphaTab",
+        "commit": "9f1aa10460df1b326123d28a2222f7b20d081e61",
+        "license": "MPL-2.0",
+        "licenseFile": "gp/LICENSE.MPL-2.0",
+        "path": "packages/alphatab/test-data/guitarpro7/notes.gp"
+      },
+      "sha256": "44c5c7f3d15c9088fc23c3a4bb8cf2350bc8a2e0a5405816eb209eb764d5c81a",
+      "expectedSha256": "1950d2bd19c28fd231ccb90d605df0fdfcb28370788cea30fe16deab31902ea8"
+    },
+    {
+      "id": "gp8",
+      "path": "gp/gp8.gp",
+      "expected": "gp/gp8.expected.json",
+      "source": {
+        "repository": "CoderLine/alphaTab",
+        "commit": "9f1aa10460df1b326123d28a2222f7b20d081e61",
+        "license": "MPL-2.0",
+        "licenseFile": "gp/LICENSE.MPL-2.0",
+        "path": "packages/alphatab/test-data/guitarpro8/beat-tempo-change.gp"
+      },
+      "sha256": "2820892be6f38c898956a3fabb6aec7c5cf0f155e5df63ba7f5c60e64158223d",
+      "expectedSha256": "173e4d7e40eb2d17b732fbf86cb476aa3d1f389849ed22efb79ea15641ff9a4f"
+    }
+  ]
+}

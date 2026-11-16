@@ -1,0 +1,28 @@
+.editor-surface {
+  position: relative;
+  min-width: 0;
+  touch-action: none;
+}
+.editor-selection-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.editor-caret {
+  fill: var(--selection-edge);
+  stroke: var(--selection-edge);
+  stroke-width: var(--focus-ring-width);
+}
+.editor-handle { pointer-events: auto; cursor: ew-resize; }
+.editor-handle-hit { fill: transparent; }
+.editor-handle-grip {
+  fill: var(--selection-edge);
+  stroke: var(--paper);
+  stroke-width: 1px;
+  transition: fill var(--motion-duration) var(--motion-ease);
+}
+.editor-handle:hover .editor-handle-grip { fill: var(--accent-hover); }
+.editor-selection-layer[data-dragging="true"] .editor-handle { pointer-events: none; }
